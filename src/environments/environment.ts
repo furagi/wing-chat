@@ -4,5 +4,16 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  clientId: '471876646140-435i8rjjncp3fujglp6n039cbl6vfse7.apps.googleusercontent.com',
+  clientSecret: 'fMBxeRxwJArCb8gmmxCoO-NR',
+  scope: [
+    'https://mail.google.com/',
+    'https://www.googleapis.com/auth/gmail.modify',
+    'https://www.googleapis.com/auth/gmail.readonly',
+    'https://www.googleapis.com/auth/gmail.settings.basic'
+  ],
+  discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest'],
+  oAuthUrl: 'https://accounts.google.com/o/oauth2/v2/auth',
+  apiUrl: 'https://www.googleapis.com/gmail/v1',
 };
