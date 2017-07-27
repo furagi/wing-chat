@@ -1,3 +1,7 @@
-<p>
-  root works!
-</p>
+<md-spinner *ngIf="loading">
+</md-spinner>
+<router-outlet *ngIf="!error && !loading">
+</router-outlet>
+<div *ngIf="error">
+  {{ error.message }}
+</div>

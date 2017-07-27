@@ -1,2 +1,3 @@
 export * from './token';
-export * from './current-user.interface';
+export * from './mailbox';
+export * from './mail';

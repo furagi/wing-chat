@@ -1,0 +1,33 @@
+.mails-list__card {
+  width: 80vw;
+  margin: auto;
+}
+
+.controls__search-bar {
+  flex: 50%;
+}
+
+.mail {
+  flex-direction: row;
+  margin: auto;
+}
+
+.mail__checkbox {
+  margin: 5px;
+  flex: 5%;
+}
+
+.mail__from {
+  flex: 15%;
+  font-weight: bold;
+}
+
+.mail__subject {
+  flex: 30%;
+  font-weight: bold;
+}
+
+.mail__body {
+  flex: 50%;
+  text-overflow: ellipsis;
+}

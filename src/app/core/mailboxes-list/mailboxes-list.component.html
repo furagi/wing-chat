@@ -1,0 +1,6 @@
+<div fxFlexFill fxFlexGap="20px" fxLayout="row" fxLayoutAlign="space-between stretch">
+  <div fxFlex="1 1" *ngFor="let mailbox of mailboxes" class='mailbox'>
+    <app-mailbox-card [mailbox]="mailbox">
+    </app-mailbox-card>
+  </div>
+</div>

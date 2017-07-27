@@ -3,7 +3,7 @@ import { URLSearchParams, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 
 import { environment } from '../../environments/environment';
-import { CurrentUser, Token } from '../../interfaces';
+import { Token } from '../../interfaces';
 
 @Injectable()
 export class AuthService {
@@ -53,7 +53,7 @@ export class AuthService {
     setTimeout(() => {
       this.login();
     }, response.expires_in * 1000);
-    this._router.navigate(['/app']);
+    this._router.navigate(['/app/mailboxes']);
   }
 
   get authHeaders() {

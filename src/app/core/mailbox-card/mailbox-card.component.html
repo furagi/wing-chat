@@ -1,0 +1,25 @@
+<a [routerLink]="'../mails'" [queryParams]="{ to: mailbox.sendAsEmail }" class='mailbox__link'>
+  <md-card>
+    <md-card-header>
+      <md-card-title>{{ mailbox.sendAsEmail }}</md-card-title>
+      <md-card-subtitle *ngIf="hasName()">{{ mailbox.displayName }}</md-card-subtitle>
+    </md-card-header>
+    <md-card-content *ngIf="loading">
+      <md-spinner>
+      </md-spinner>
+    </md-card-content>
+    <md-card-content *ngIf="error">
+      {{ error | json }}
+    </md-card-content>
+    <md-card-content *ngIf="!loading && !error">
+      <p>
+        Unreaded count: >= {{ mailboxMetadata.unreadedCount }}
+      </p>
+      <h3 class='last-mail__header'>
+        Last mail
+      </h3>
+      <app-mail-card [mail]="mailboxMetadata.lastMail">
+      </app-mail-card>
+    </md-card-content>
+  </md-card>
+</a>

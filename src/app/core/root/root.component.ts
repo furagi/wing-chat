@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
 
-import { MailboxesService } from '../mailboxes.service';
+import { Mailbox } from '../../../interfaces';
+import { MailboxService } from '../mailbox.service';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +10,21 @@ import { MailboxesService } from '../mailboxes.service';
   styleUrls: ['./root.component.css']
 })
 export class RootComponent implements OnInit {
-
-  constructor(private _mailboxesService: MailboxesService) { }
+  error: Error;
+  loading: boolean;
+  constructor(private _mailboxService: MailboxService, private _router: Router) { }
 
   ngOnInit() {
-    this._mailboxesService.all();
+    this.loading = true;
+    this._mailboxService.load()
+    .subscribe((result) => {
+      this.error = null;
+      this.loading = false;
+      this._router.navigate(['/app/mailboxes']);
+    }, (err) => {
+      this.error = err;
+      this.loading = false;
+    });
   }
 
 }
