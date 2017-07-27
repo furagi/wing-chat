@@ -8,16 +8,18 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CdkTableModule } from '@angular/cdk';
 
-import { UsersListComponent } from './users-list/users-list.component';
-import { MailboxService } from './mailbox.service';
+import { ContactsService } from './contacts.service';
 import { MailService } from './mail.service';
-import { RootComponent } from './root/root.component';
-import { MailboxesListComponent } from './mailboxes-list/mailboxes-list.component';
 import { MailboxCardComponent } from './mailbox-card/mailbox-card.component';
+import { MailboxService } from './mailbox.service';
+import { MailboxesListComponent } from './mailboxes-list/mailboxes-list.component';
+import { RootComponent } from './root/root.component';
+import { UsersListComponent } from './users-list/users-list.component';
 import { coreRoutes } from './core.router';
 import { DatePipe } from './date.pipe';
 import { MailCardComponent } from './mail-card/mail-card.component';
 import { MailsListComponent } from './mails-list/mails-list.component';
+import { SafeHtmlPipe } from './safe-html.pipe';
 
 @NgModule({
   imports: [
@@ -32,7 +34,7 @@ import { MailsListComponent } from './mails-list/mails-list.component';
     ReactiveFormsModule,
     RouterModule.forChild(coreRoutes)
   ],
-  providers: [MailboxService, MailService],
+  providers: [MailboxService, MailService, ContactsService],
   declarations: [
     UsersListComponent,
     RootComponent,
@@ -40,7 +42,8 @@ import { MailsListComponent } from './mails-list/mails-list.component';
     MailboxCardComponent,
     DatePipe,
     MailCardComponent,
-    MailsListComponent
+    MailsListComponent,
+    SafeHtmlPipe
   ]
 })
 export class CoreModule { }

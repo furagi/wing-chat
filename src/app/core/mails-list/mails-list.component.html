@@ -1,18 +1,25 @@
 <md-card class="mails-list__card">
   <md-spinner *ngIf="!currentPage"></md-spinner>
-    <div class="mail controls">
-    <md-checkbox [(ngModel)]="allMailsSelected" (change)="toggleAllMails()" class="mail__checkbox">
-    </md-checkbox>
-    <button md-button (click)="deleteMails()">Delete selected mails</button>
-    <md-input-container class="controls__search-bar">
-      <input mdInput placeholder="Search" type="text" [(ngModel)]="queryText" [formControl]="searchQuery">
-    </md-input-container>
+  <div class="mail controls">
+    <div class="controls__left">
+      <div class="mail__checkbox controls__checkbox">
+        <md-checkbox [(ngModel)]="allMailsSelected" (change)="toggleAllMails()">
+        </md-checkbox>
+      </div>
+      <button md-button (click)="deleteMails()" class="controls__delete-button">Delete selected mails</button>
+      <md-input-container class="controls__search-bar">
+        <input mdInput placeholder="Search" type="text" [(ngModel)]="queryText" [formControl]="searchQuery">
+      </md-input-container>
     </div>
-    <md-nav-list *ngIf="currentPage">
+    <div class="controls__right">
+      <button md-button (click)="deleteMails()">Create a new mail</button>
+    </div>
+  </div>
+  <md-nav-list *ngIf="currentPage">
     <md-list-item *ngFor="let mail of currentPage.list" class="mail">
       <md-checkbox [(ngModel)]="selectedMails[mail.id]" class="mail__checkbox">
       </md-checkbox>
-      <a [routerLink]="['./mails', mail.id]">
+      <a [routerLink]="[mail.id]">
         <span class="mail__from">{{ mail.from }}</span>
         <span class="mail__subject">{{ mail.subject }}</span>
         <span class="mail__body">{{ mail.body }}</span>

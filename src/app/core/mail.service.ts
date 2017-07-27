@@ -3,14 +3,17 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/combineLatest';
 
 import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/auth.service';
+import { ContactsService } from './contacts.service';
 import { Mailbox, Mail, Page } from '../../interfaces';
 
 @Injectable()
 export class MailService {
-  constructor(private _http: Http, private _auth: AuthService) { }
+  constructor(private _http: Http, private _auth: AuthService, private _contacts: ContactsService) { }
 
   search(query: string, pageSize: number, pageToken?: string): Observable<Page<Mail>> {
     const token = this._auth.accessToken.value;
@@ -34,8 +37,8 @@ export class MailService {
         });
         return Observable.combineLatest(...observables);
       })
-      .map(function(responses) {
-        const mails = responses.map(function(response) {
+      .map((responses) => {
+        const mails = responses.map((response) => {
           const mail = response.json();
           const headers: { [type: string]: string } = {};
           mail.payload.headers.forEach(function (header) {
@@ -47,6 +50,7 @@ export class MailService {
           mail.to = headers['Delivered-To'];
           mail.from = headers.From;
           mail.subject = headers.Subject;
+          this._contacts.add(mail.from);
           return mail;
         });
         return {nextPageToken, resultSizeEstimate, list: mails};
@@ -78,7 +82,36 @@ export class MailService {
           headers[header.name] = header.value;
         });
         mail.id = mail.id;
-        mail.body = mail.snippet;
+        let body = mail.payload.body;
+        if (body.size) {
+          try {
+            body = body.replace(/-/g, '+').replace(/_/g, '/');
+            mail.body = atob(body.data);
+          } catch (e) {
+            mail.body = '';
+          }
+        } else if (mail.payload.parts) {
+          try {
+            const bodies: { [type: string]: string } = {};
+            mail.payload.parts.forEach(function(part) {
+              if (!bodies[part.mimeType]) {
+                bodies[part.mimeType] = '';
+              }
+              const base64String = part.body.data.replace(/-/g, '+').replace(/_/g, '/');
+              bodies[part.mimeType] += atob(base64String);
+            });
+            console.log(bodies);
+            if (bodies['text/html']) {
+              mail.body = bodies['text/html'];
+            } else if (bodies['text/plain']) {
+              mail.body = bodies['text/plain'];
+            } else {
+              mail.body = bodies[Object.keys(bodies)[0]] || '';
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        }
         mail.date = +mail.internalDate;
         mail.to = headers['Delivered-To'];
         mail.from = headers.From;

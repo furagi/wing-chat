@@ -1,20 +1,24 @@
 <md-card>
-  <md-card-header class='mail__header'>
-    <md-card-title-group class='mail__title-group'>
-      <md-card-title>{{ mail.subject }}</md-card-title>
-      <md-card-subtitle class='mail__subtitle'>
-        <div fxFlexFill fxFlexGap="20px" fxLayout="row" fxLayoutAlign="stretch stretch">
-          <div fxFlex="1 1">
-            {{ mail.from }}
+  <md-spinner *ngIf="!mail"></md-spinner>
+  <div *ngIf="mail">
+    <md-card-header class="mail__header">
+      <md-card-title-group class="mail__title-group">
+        <md-card-title>{{ mail.subject }}</md-card-title>
+        <md-card-subtitle class="mail__subtitle">
+          <div fxFlexFill fxFlexGap="20px" fxLayout="row" fxLayoutAlign="stretch stretch">
+            <div fxFlex="1 1">
+              {{ mail.from }}
+            </div>
+            <div fxFlex="1 1">
+              {{ mail.date | date }}
+            </div>
           </div>
-          <div fxFlex="1 1">
-            {{ mail.date | date }}
-          </div>
-        </div>
-      </md-card-subtitle>
-    </md-card-title-group>
-  </md-card-header>
-  <md-card-content>
-    {{ mail.body }}
-  </md-card-content>
+        </md-card-subtitle>
+      </md-card-title-group>
+    </md-card-header>
+    <md-card-content>
+      <div [innerHTML]="mail.body | safeHtml">
+      </div>
+    </md-card-content>
+  </div>
 </md-card>
