@@ -8,7 +8,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/of';
 
 
-import { Mail } from '../../../interfaces';
+import { Mail, Page } from '../../../interfaces';
 import { MailService } from '../mail.service';
 
 @Component({
@@ -18,35 +18,52 @@ import { MailService } from '../mail.service';
 })
 export class MailsListComponent implements OnInit {
   searchQuery: FormControl;
-  mails: Mail[];
+  currentPage: Page<Mail>;
   selectedMails: { [type: string]: boolean } = {};
   allMailsSelected = false;
+  pageSize = 25;
+  pageTokens: string[] = [undefined];
+  queryText = '';
   private _to: string;
   constructor(private _route: ActivatedRoute, private _mailService: MailService) { }
+
+  private set _page(page: Page<Mail>) {
+    this.currentPage = page;
+    if (page.nextPageToken) {
+      this.pageTokens.push(page.nextPageToken);
+    };
+  }
 
   ngOnInit() {
     this._route.queryParamMap
       .switchMap((params: ParamMap) => {
         this._to = params.get('to');
-        return this._mailService.search(`to:(${this._to})`);
+        return this._mailService.search(`to:(${this._to})`, this.pageSize);
       })
-      .subscribe((mails) => this.mails = mails );
+      .subscribe((page) => {
+        this._page = page;
+      });
 
     this.searchQuery = new FormControl('');
     this.searchQuery.valueChanges
       .debounceTime(350)
       .distinctUntilChanged()
-      .switchMap((query) => this._mailService.search(`to:(${this._to}) ${query}`))
-      .subscribe((mails) => this.mails = mails);
+      .switchMap((query) => {
+        this.currentPage = undefined;
+        return this._mailService.search(`to:(${this._to}) ${query}`, this.pageSize)
+      })
+      .subscribe((page) => {
+        this.pageTokens = [undefined]
+        this._page = page;
+      });
   }
 
   toggleAllMails() {
-    console.log(this.allMailsSelected);
-    if (!this.mails) {
+    if (!this.currentPage) {
       return;
     }
     if (this.allMailsSelected) {
-      this.mails.forEach((mail) => {
+      this.currentPage.list.forEach((mail) => {
         this.selectedMails[mail.id] = true;
       });
     } else {
@@ -55,18 +72,34 @@ export class MailsListComponent implements OnInit {
   }
 
   deleteMails() {
-    const mails = this.mails.filter((mail) => this.selectedMails[mail.id]);
+    const mails = this.currentPage.list.filter((mail) => this.selectedMails[mail.id]);
     if (mails.length === 0) {
       return;
     }
     this._mailService.remove(mails)
       .subscribe((ids) => {
-        this.mails = this.mails.filter((mail) => ids.indexOf(mail.id) === -1);
+        this.currentPage.list = this.currentPage.list.filter((mail) => ids.indexOf(mail.id) === -1);
       });
   }
 
-  search() {
-
+  changePage({pageSize, pageIndex}: {pageIndex: number, pageSize: number}) {
+    this.currentPage = undefined;
+    if (pageSize !== this.pageSize) {
+      this.pageTokens = [undefined];
+      pageIndex = 0;
+    } else if (pageIndex < this.pageTokens.length - 1) {
+      pageIndex--;
+      this.pageTokens.pop();
+    }
+    this.pageSize = pageSize;
+    this._mailService.search(`to:(${this._to})`, this.pageSize, this.pageTokens[pageIndex])
+      .subscribe((page) => this._page = page);
   }
 
+  get mailsAmount(): number {
+    if (!this.currentPage) {
+      return 0;
+    }
+    return (this.pageTokens.length - 1) * this.pageSize + this.currentPage.resultSizeEstimate;
+  }
 }

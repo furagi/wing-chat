@@ -16,4 +16,5 @@ export const environment = {
   discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest'],
   oAuthUrl: 'https://accounts.google.com/o/oauth2/v2/auth',
   apiUrl: 'https://www.googleapis.com/gmail/v1',
+  pageSize: 50
 };
