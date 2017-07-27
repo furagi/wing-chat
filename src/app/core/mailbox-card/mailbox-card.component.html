@@ -13,13 +13,17 @@
     </md-card-content>
     <md-card-content *ngIf="!loading && !error">
       <p>
-        Unreaded count: >= {{ mailboxMetadata.unreadedCount }}
+        Unreaded count: {{ mailboxMetadata.unreadedCount }}
       </p>
       <h3 class='last-mail__header'>
         Last mail
       </h3>
-      <app-mail-card [mail]="mailboxMetadata.lastMail">
-      </app-mail-card>
+      <p>
+        From: {{ mailboxMetadata.lastMail.from }}
+      </p>
+      <p>
+        Subject: {{ mailboxMetadata.lastMail.subject }}
+      </p>
     </md-card-content>
   </md-card>
 </a>

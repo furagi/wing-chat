@@ -32,10 +32,14 @@ export class MailboxService {
     const url = `${environment.apiUrl}/users/me/messages`;
     return this._http.get(url, {
       headers: this._auth.authHeaders,
-      params: { q: `is:unread to:(${mailbox.sendAsEmail})` }
+      params: { maxResults: 1, q: `is:unread to:(${mailbox.sendAsEmail})` }
       })
       .flatMap((response) => {
-        mailbox.unreadedCount = response.json().messages.length;
+        const json = response.json();
+        mailbox.unreadedCount = json.resultSizeEstimate;
+        if (json.messages) {
+          mailbox.unreadedCount += 1;
+        }
         return this._http.get(url, {
           headers: this._auth.authHeaders,
           params: { maxResults: 1, q: `to:(${mailbox.sendAsEmail})` }

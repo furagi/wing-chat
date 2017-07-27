@@ -65,4 +65,26 @@ export class MailService {
       });
   }
 
+  findById(id: string): Observable<Mail> {
+    const token = this._auth.accessToken.value;
+    const url = `${environment.apiUrl}/users/me/messages/${id}`;
+    return this._http.get(url, {
+      headers: this._auth.authHeaders
+    })
+      .map(function (response) {
+        const mail = response.json();
+        const headers: { [type: string]: string } = {};
+        mail.payload.headers.forEach(function (header) {
+          headers[header.name] = header.value;
+        });
+        mail.id = mail.id;
+        mail.body = mail.snippet;
+        mail.date = +mail.internalDate;
+        mail.to = headers['Delivered-To'];
+        mail.from = headers.From;
+        mail.subject = headers.Subject;
+        return mail;
+      });
+  }
+
 }

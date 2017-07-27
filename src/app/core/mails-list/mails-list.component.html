@@ -1,30 +1,28 @@
-<div class="mails-list__root">
-  <md-card class="mails-list__card">
-    <md-spinner *ngIf="!currentPage"></md-spinner>
-     <div class="mail controls">
-      <md-checkbox [(ngModel)]="allMailsSelected" (change)="toggleAllMails()" class="mail__checkbox">
+<md-card class="mails-list__card">
+  <md-spinner *ngIf="!currentPage"></md-spinner>
+    <div class="mail controls">
+    <md-checkbox [(ngModel)]="allMailsSelected" (change)="toggleAllMails()" class="mail__checkbox">
+    </md-checkbox>
+    <button md-button (click)="deleteMails()">Delete selected mails</button>
+    <md-input-container class="controls__search-bar">
+      <input mdInput placeholder="Search" type="text" [(ngModel)]="queryText" [formControl]="searchQuery">
+    </md-input-container>
+    </div>
+    <md-nav-list *ngIf="currentPage">
+    <md-list-item *ngFor="let mail of currentPage.list" class="mail">
+      <md-checkbox [(ngModel)]="selectedMails[mail.id]" class="mail__checkbox">
       </md-checkbox>
-      <button md-button (click)="deleteMails()">Delete selected mails</button>
-      <md-input-container class="controls__search-bar">
-        <input mdInput placeholder="Search" type="text" [(ngModel)]="queryText" [formControl]="searchQuery">
-      </md-input-container>
-     </div>
-     <md-nav-list *ngIf="currentPage">
-      <md-list-item *ngFor="let mail of currentPage.list" class="mail">
-        <md-checkbox [(ngModel)]="selectedMails[mail.id]" class="mail__checkbox">
-        </md-checkbox>
-        <a [routerLink]="['./mails', mail.id]">
-          <span class="mail__from">{{ mail.from }}</span>
-          <span class="mail__subject">{{ mail.subject }}</span>
-          <span class="mail__body">{{ mail.body }}</span>
-        </a>
-      </md-list-item>
-    </md-nav-list>
-    <md-paginator
-      [length]="mailsAmount"
-      [pageSize]="pageSize"
-      [pageSizeOptions]="[5, 10, 25, 100]"
-      (page)="changePage($event)">
-    </md-paginator>
-  </md-card>
-</div>
+      <a [routerLink]="['./mails', mail.id]">
+        <span class="mail__from">{{ mail.from }}</span>
+        <span class="mail__subject">{{ mail.subject }}</span>
+        <span class="mail__body">{{ mail.body }}</span>
+      </a>
+    </md-list-item>
+  </md-nav-list>
+  <md-paginator
+    [length]="mailsAmount"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="changePage($event)">
+  </md-paginator>
+</md-card>
