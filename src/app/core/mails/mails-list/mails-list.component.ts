@@ -8,8 +8,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/of';
 
 
-import { Mail, Page } from '../../../interfaces';
-import { MailService } from '../mail.service';
+import { Mail, Page } from '../../../../interfaces';
+import { MailService } from '../../shared/mail.service';
 
 @Component({
   selector: 'app-mails-list',

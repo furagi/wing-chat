@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 
 import { Mailbox } from '../../../interfaces';
-import { MailboxService } from '../mailbox.service';
+import { MailboxService } from '../mailboxes/mailbox.service';
 
 @Component({
   selector: 'app-root',

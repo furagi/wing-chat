@@ -6,10 +6,10 @@ import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/combineLatest';
 
-import { environment } from '../../environments/environment';
-import { AuthService } from '../shared/auth.service';
+import { environment } from '../../../environments/environment';
+import { AuthService } from '../../shared/auth.service';
 import { ContactsService } from './contacts.service';
-import { Mailbox, Mail, Page } from '../../interfaces';
+import { Mailbox, Mail, Page } from '../../../interfaces';
 
 @Injectable()
 export class MailService {

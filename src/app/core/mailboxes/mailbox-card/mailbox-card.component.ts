@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { Mailbox } from '../../../interfaces';
+import { Mailbox } from '../../../../interfaces';
 import { MailboxService } from '../mailbox.service';
 
 @Component({

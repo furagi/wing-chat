@@ -1,10 +1,10 @@
 import { Route } from '@angular/router';
 
-import { MailboxesListComponent } from './mailboxes-list/mailboxes-list.component';
+import { MailboxesListComponent } from './mailboxes/mailboxes-list/mailboxes-list.component';
 import { RootComponent } from './root/root.component';
 import { AuthGuard } from '../shared/auth.guard';
-import { MailsListComponent } from './mails-list/mails-list.component';
-import { MailCardComponent } from './mail-card/mail-card.component';
+import { MailsListComponent } from './mails/mails-list/mails-list.component';
+import { MailCardComponent } from './mails/mail-card/mail-card.component';
 
 export const coreRoutes: Route[] = [{
   path: 'app',

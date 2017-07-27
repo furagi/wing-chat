@@ -4,9 +4,9 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/mergeMap';
 
-import { environment } from '../../environments/environment';
-import { Mailbox } from '../../interfaces';
-import { AuthService } from '../shared/auth.service';
+import { environment } from '../../../environments/environment';
+import { Mailbox } from '../../../interfaces';
+import { AuthService } from '../../shared/auth.service';
 
 @Injectable()
 export class MailboxService {
