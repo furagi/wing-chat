@@ -24,7 +24,7 @@ export class MailboxService {
   }
 
   get mailboxes() {
-    return this._mailboxes;
+    return [ ...this._mailboxes ];
   }
 
   loadMailbox(mailbox: Mailbox): Observable<Mailbox> {

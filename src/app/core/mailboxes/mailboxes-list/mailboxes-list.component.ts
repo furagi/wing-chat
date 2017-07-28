@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Mailbox } from '../../../../interfaces';
-import { MailboxService } from '../mailbox.service';
+import { MailboxService } from '../../shared/mailbox.service';
 
 @Component({
   selector: 'app-mailboxes-list',

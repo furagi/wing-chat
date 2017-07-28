@@ -1,3 +1,18 @@
-<p>
-  new-mail works!
-</p>
+<form [formGroup]="newMailForm" class="new-mail">
+  <md-input-container>
+    <input mdInput placeholder="To" formControlName="to" [mdAutocomplete]="auto">
+    <md-error>This field is required and should be a valid email</md-error>
+  </md-input-container>
+  <md-autocomplete #auto="mdAutocomplete">
+    <md-option *ngFor="let contact of filteredContacts | async" [value]="contact">
+      {{ contact }}
+    </md-option>
+  </md-autocomplete>
+  <md-input-container>
+    <input type="text" mdInput placeholder="Subject" formControlName="subject">
+  </md-input-container>
+  <md-input-container>
+    <textarea type="email" mdInput placeholder="To" formControlName="body"></textarea>
+  </md-input-container>
+  <button md-button (click)="send()">Send</button>
+</form>

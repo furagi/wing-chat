@@ -23,6 +23,7 @@ import { SafeHtmlPipe } from './safe-html.pipe';
     MailsListComponent,
     NewMailComponent,
     SafeHtmlPipe
-  ]
+  ],
+  entryComponents: [NewMailComponent]
 })
 export class MailsModule { }

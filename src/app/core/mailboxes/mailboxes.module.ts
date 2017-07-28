@@ -5,7 +5,6 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { MailboxCardComponent } from './mailbox-card/mailbox-card.component';
-import { MailboxService } from './mailbox.service';
 import { MailboxesListComponent } from './mailboxes-list/mailboxes-list.component';
 
 @NgModule({
@@ -19,6 +18,6 @@ import { MailboxesListComponent } from './mailboxes-list/mailboxes-list.componen
     MailboxesListComponent,
     MailboxCardComponent,
   ],
-  providers: [MailboxService]
+  providers: []
 })
 export class MailboxesModule { }

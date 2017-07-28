@@ -1,0 +1,13 @@
+.new-mail {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.new-mail__to {
+
+}
+
+.new-mail__body {
+
+}

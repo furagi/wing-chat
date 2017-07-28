@@ -1,8 +1,8 @@
 export interface Mail {
-  id: string;
+  id?: string;
   from: string;
   to: string;
   subject: string;
   body: string;
-  date: number;
+  date?: number;
 }

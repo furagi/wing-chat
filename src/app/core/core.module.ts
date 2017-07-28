@@ -5,7 +5,6 @@ import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 
-
 import { SharedModule } from './shared/shared.module';
 import { MailsModule } from './mails/mails.module';
 import { RootComponent } from './root/root.component';

@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 
 import { ContactsService } from './contacts.service';
 import { MailService } from './mail.service';
+import { MailboxService } from './mailbox.service';
 import { DatePipe } from './date.pipe';
 
 @NgModule({
@@ -14,6 +15,6 @@ import { DatePipe } from './date.pipe';
   declarations: [
     DatePipe,
   ],
-  providers: [MailService, ContactsService]
+  providers: [MailService, ContactsService, MailboxService]
 })
 export class SharedModule { }

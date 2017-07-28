@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Mailbox } from '../../../../interfaces';
-import { MailboxService } from '../mailbox.service';
+import { MailboxService } from '../../shared/mailbox.service';
 
 @Component({
   selector: 'app-mailbox-card',

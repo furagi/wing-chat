@@ -100,7 +100,6 @@ export class MailService {
               const base64String = part.body.data.replace(/-/g, '+').replace(/_/g, '/');
               bodies[part.mimeType] += atob(base64String);
             });
-            console.log(bodies);
             if (bodies['text/html']) {
               mail.body = bodies['text/html'];
             } else if (bodies['text/plain']) {
@@ -117,6 +116,19 @@ export class MailService {
         mail.from = headers.From;
         mail.subject = headers.Subject;
         return mail;
+      });
+  }
+
+  send(mail: Mail) {
+    const token = this._auth.accessToken.value;
+    const url = `${environment.apiUrl}/users/me/messages/send`;
+    const data = `From: ${mail.from}\r\nTo: ${mail.to}\r\nSubject: ${mail.subject}\r\n${mail.body}`;
+    this._contacts.add(mail.to);
+    return this._http.post(url,
+      { raw: btoa(data).replace(/\+/g, '-').replace(/\//g, '_') },
+      { headers: this._auth.authHeaders })
+      .map((response) => {
+        return response.json();
       });
   }
 

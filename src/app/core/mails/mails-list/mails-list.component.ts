@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { FormControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { MdDialog } from '@angular/material';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/of';
 
-
 import { Mail, Page } from '../../../../interfaces';
 import { MailService } from '../../shared/mail.service';
+import { NewMailComponent } from '../new-mail/new-mail.component';
 
 @Component({
   selector: 'app-mails-list',
@@ -25,7 +26,10 @@ export class MailsListComponent implements OnInit {
   pageTokens: string[] = [undefined];
   queryText = '';
   private _to: string;
-  constructor(private _route: ActivatedRoute, private _mailService: MailService) { }
+  constructor(
+    private _route: ActivatedRoute,
+    private _dialog: MdDialog,
+    private _mailService: MailService) { }
 
   private set _page(page: Page<Mail>) {
     this.currentPage = page;
@@ -101,5 +105,9 @@ export class MailsListComponent implements OnInit {
       return 0;
     }
     return (this.pageTokens.length - 1) * this.pageSize + this.currentPage.resultSizeEstimate;
+  }
+
+  showNewMailForm() {
+    this._dialog.open(NewMailComponent);
   }
 }
